@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Applications</h2>
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr><th>Job Title</th><th>Company</th><th>Applied On</th><th>Status</th><th>Feedback</th></tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.job.title }}</td>
+            <td>{{ app.job.company.name }}</td>
+            <td>{{ app.applied_at.strftime('%Y-%m-%d') }}</td>
+            <td>
+                <span class="badge bg-{% if app.status == 'shortlisted' %}success{% elif app.status == 'rejected' %}danger{% elif app.status == 'selected' %}info{% else %}secondary{% endif %}">
+                    {{ app.status }}
+                </span>
+            </td>
+            <td>
+                {% if app.rejection_reason %}
+                    {{ app.rejection_reason }}
+                {% elif app.status == 'shortlisted' %}
+                    Awaiting further process
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

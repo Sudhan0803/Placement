@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{% if job %}Edit Job{% else %}Post New Job{% endif %}</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label>Job Title</label>
+        <input type="text" name="title" class="form-control" value="{{ job.title if job else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" rows="4" class="form-control" required>{{ job.description if job else '' }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label>Required Skills (comma separated)</label>
+        <input type="text" name="required_skills" class="form-control" value="{{ job.required_skills if job else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Minimum GPA</label>
+        <input type="number" step="0.01" name="min_gpa" class="form-control" value="{{ job.min_gpa if job else '' }}">
+    </div>
+    <div class="mb-3">
+        <label>Location</label>
+        <input type="text" name="location" class="form-control" value="{{ job.location if job else '' }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Save Job</button>
+    <a href="{{ url_for('company_jobs') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Student Dashboard</h2>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Profile</h5>
+                {% if profile and profile.skills %}
+                    <p><strong>Skills:</strong> {{ profile.skills }}</p>
+                    <p><strong>GPA:</strong> {{ profile.gpa }}</p>
+                {% else %}
+                    <p>Complete your profile for better matching.</p>
+                {% endif %}
+                <a href="{{ url_for('student_profile') }}" class="btn btn-primary">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Recent Applications</h5>
+                {% if applications %}
+                    <ul class="list-group">
+                    {% for app in applications %}
+                        <li class="list-group-item">
+                            {{ app.job.title }} - Status: 
+                            <span class="badge bg-{% if app.status == 'shortlisted' %}success{% elif app.status == 'rejected' %}danger{% else %}secondary{% endif %}">
+                                {{ app.status }}
+                            </span>
+                            {% if app.rejection_reason %}
+                                <br><small class="text-danger">Reason: {{ app.rejection_reason }}</small>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No applications yet. <a href="{{ url_for('student_jobs') }}">Browse Jobs</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>All Applications</h2>
+<table class="table table-striped mt-3">
+    <thead>
+        <tr><th>Student</th><th>Job</th><th>Company</th><th>Status</th><th>Schedule Interview</th></tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.student.name }}</td>
+            <td>{{ app.job.title if app.job else 'N/A' }}</td>
+            <td>{{ app.company.name if app.company else 'N/A' }}</td>
+            <td>{{ app.application.status }}</td>
+            <td>
+                {% if app.application.status == 'shortlisted' %}
+                <a href="{{ url_for('schedule_interview', app_id=app.application.id) }}" class="btn btn-sm btn-primary">Schedule</a>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

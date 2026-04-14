@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Recommended Students for: {{ job.title }}</h2>
+<p>Based on skill match and GPA requirements.</p>
+<table class="table table-hover mt-3">
+    <thead>
+        <tr><th>Student</th><th>Branch</th><th>GPA</th><th>Match Score</th><th>Missing Skills</th></tr>
+    </thead>
+    <tbody>
+        {% for rec in recommendations %}
+        <tr>
+            <td>{{ rec.student.name }}</td>
+            <td>{{ rec.profile.branch }}</td>
+            <td>{{ rec.profile.gpa }}</td>
+            <td><span class="badge bg-{% if rec.score > 70 %}success{% elif rec.score > 40 %}warning{% else %}secondary{% endif %}">{{ rec.score }}%</span></td>
+            <td>{{ rec.missing_skills|join(', ') if rec.missing_skills else 'None' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

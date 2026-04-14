@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Apply for: {{ job.title }}</h2>
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>Job Details</h5>
+        <p><strong>Company:</strong> {{ job.company.name }}</p>
+        <p><strong>Description:</strong> {{ job.description }}</p>
+        <p><strong>Required Skills:</strong> {{ job.required_skills }}</p>
+        <p><strong>Minimum GPA:</strong> {{ job.min_gpa }}</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>Your Match Analysis</h5>
+        <p><strong>Match Score:</strong> {{ match_score }}%</p>
+        <p><strong>Eligible based on GPA & Skills:</strong> 
+            {% if eligible %} ✅ Yes {% else %} ❌ No {% endif %}
+        </p>
+        {% if details.missing_skills %}
+            <p><strong>Missing Skills:</strong> {{ details.missing_skills|join(', ') }}</p>
+        {% endif %}
+        <p><strong>Skill Match:</strong> {{ details.skill_percentage }}%</p>
+        {% if not eligible %}
+            <div class="alert alert-warning">You may not meet the minimum requirements. However, you can still apply.</div>
+        {% endif %}
+    </div>
+</div>
+
+<form method="POST">
+    <button type="submit" class="btn btn-success">Confirm Application</button>
+    <a href="{{ url_for('student_jobs') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

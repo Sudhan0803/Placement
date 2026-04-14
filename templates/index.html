@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4">Smart Placement Platform</h1>
+        <p class="lead">Intelligent matching between students and companies. Transparent, efficient, and fair.</p>
+        <hr class="my-4">
+        <p>For Students: Get matched with jobs based on your skills and profile. Receive clear feedback.</p>
+        <p>For Recruiters: Find the right candidates with smart recommendations.</p>
+        <p>For Placement Team: Manage the entire process seamlessly.</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started</a>
+        <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg">Login</a>
+    </div>
+</div>
+{% endblock %}

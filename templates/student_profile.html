@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Profile</h2>
+<form method="POST">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label>Roll Number</label>
+            <input type="text" name="roll_number" class="form-control" value="{{ profile.roll_number or '' }}">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label>Branch</label>
+            <input type="text" name="branch" class="form-control" value="{{ profile.branch or '' }}">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label>Graduation Year</label>
+            <input type="number" name="graduation_year" class="form-control" value="{{ profile.graduation_year or '' }}">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label>GPA (out of 10)</label>
+            <input type="number" step="0.01" name="gpa" class="form-control" value="{{ profile.gpa or '' }}">
+        </div>
+        <div class="col-12 mb-3">
+            <label>Skills (comma separated, e.g., Python, Java, SQL)</label>
+            <textarea name="skills" rows="2" class="form-control">{{ profile.skills or '' }}</textarea>
+        </div>
+        <div class="col-12 mb-3">
+            <label>Projects / Experience</label>
+            <textarea name="projects" rows="3" class="form-control">{{ profile.projects or '' }}</textarea>
+        </div>
+        <div class="col-12 mb-3">
+            <label>Resume Text (optional)</label>
+            <textarea name="resume_text" rows="4" class="form-control">{{ profile.resume_text or '' }}</textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Profile</button>
+    <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

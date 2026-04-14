@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Applications for: {{ job.title }}</h2>
+<table class="table table-striped mt-3">
+    <thead>
+        <tr><th>Student</th><th>Branch</th><th>GPA</th><th>Match Score</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.student.name }}</td>
+            <td>{{ app.profile.branch if app.profile else '-' }}</td>
+            <td>{{ app.profile.gpa if app.profile else '-' }}</td>
+            <td>{{ app.application.match_score or 'N/A' }}%</td>
+            <td>{{ app.application.status }}</td>
+            <td>
+                {% if app.application.status == 'pending' %}
+                <form method="POST" action="{{ url_for('review_application', app_id=app.application.id) }}" style="display:inline">
+                    <input type="hidden" name="action" value="shortlist">
+                    <button class="btn btn-sm btn-success">Shortlist</button>
+                </form>
+                <form method="POST" action="{{ url_for('review_application', app_id=app.application.id) }}" style="display:inline">
+                    <input type="hidden" name="action" value="reject">
+                    <button class="btn btn-sm btn-danger">Reject</button>
+                </form>
+                {% elif app.application.status == 'shortlisted' %}
+                <form method="POST" action="{{ url_for('review_application', app_id=app.application.id) }}" style="display:inline">
+                    <input type="hidden" name="action" value="select">
+                    <button class="btn btn-sm btn-info">Select</button>
+                </form>
+                {% endif %}
+                {% if app.application.rejection_reason %}
+                    <br><small class="text-muted">Reason: {{ app.application.rejection_reason }}</small>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
