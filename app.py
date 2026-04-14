@@ -5,7 +5,11 @@ from config import Config
 from models import db, User, StudentProfile, CompanyProfile, Job, Application, Interview
 from matching import compute_match_score, get_rejection_reason, parse_skills
 from datetime import datetime
+from flask_pymongo import PyMongo
 
+app = Flask(__name__)
+app.config.from_object(Config)
+mongo = PyMongo(app)  # Initialize MongoDB client
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)

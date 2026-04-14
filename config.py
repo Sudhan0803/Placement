@@ -1,6 +1,9 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Config:
-    SECRET_KEY = 'your-secret-key-change-in-production'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///placement.db'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'your-secret-key'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///placement.db'  # Keep for other data
+    MONGO_URI = os.environ.get('MONGO_URI')
